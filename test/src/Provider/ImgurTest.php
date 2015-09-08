@@ -86,13 +86,14 @@ class ImgurTest extends \PHPUnit_Framework_TestCase
         $bio = uniqid();
         $reputation = rand(1000,9999);
         $created = rand(1000,9999);
+        $proExpiration = false;
 
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')->andReturn('access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token');
         $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'application/x-www-form-urlencoded']);
         $postResponse->shouldReceive('getStatusCode')->andReturn(200);
         $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $userResponse->shouldReceive('getBody')->andReturn('{"data":{"id :'.$userId.',"url:"'.$url.'","bio:"'.$bio.'""reputation":'.$reputation.',"created:'.$created.',"pro_expiration":false,},"status":200,"success":true}');
+        $userResponse->shouldReceive('getBody')->andReturn('{"data":{"id":'.$userId.',"url":"'.$url.'","bio":"'.$bio.'","reputation":'.$reputation.',"created":'.$created.',"pro_expiration":false},"status":200,"success":true}');
 
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $userResponse->shouldReceive('getStatusCode')->andReturn(200);
@@ -107,11 +108,33 @@ class ImgurTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($userId, $user->getId());
         $this->assertEquals($userId, $user->toArray()['id']);
         $this->assertEquals($url, $user->getUrl());
-        $this->assertEquals($url, $user->toArray()['data']['url']);
-        $this->assertEquals($nickname, $user->getNickname());
-        $this->assertEquals($nickname, $user->toArray()['login']);
-        $this->assertEquals($email, $user->getEmail());
-        $this->assertEquals($email, $user->toArray()['email']);
-        $this->assertContains($nickname, $user->getUrl());
+        $this->assertEquals($url, $user->toArray()['url']);
+        $this->assertEquals($bio, $user->getBio());
+        $this->assertEquals($bio, $user->toArray()['bio']);
+        $this->assertEquals($reputation, $user->getReputation());
+        $this->assertEquals($reputation, $user->toArray()['reputation']);
+        $this->assertEquals($created, $user->getCreated());
+        $this->assertEquals($created, $user->toArray()['created']);
+        $this->assertEquals($proExpiration, $user->getProExpiration());
+        $this->assertEquals($proExpiration, $user->toArray()['pro_expiration']);
+    }
+
+    /**
+     * @expectedException League\OAuth2\Client\Provider\Exception\IdentityProviderException
+     */
+    public function testExceptionThrownWhenErrorObjectReceived()
+    {
+        $message = uniqid();
+        $status = rand(400,600);
+        $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
+        $postResponse->shouldReceive('getBody')->andReturn(' {"error":"'.$message.'"}');
+        $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
+        $postResponse->shouldReceive('getStatusCode')->andReturn($status);
+        $client = m::mock('GuzzleHttp\ClientInterface');
+        $client->shouldReceive('send')
+            ->times(1)
+            ->andReturn($postResponse);
+        $this->provider->setHttpClient($client);
+        $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
 }

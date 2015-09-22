@@ -1,5 +1,5 @@
 {
-    "name": "adampaterson/oauth2-imgur",
+    "name": "adam-paterson/oauth2-imgur",
     "description": "Imgur OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
     "keywords": [
         "oauth",

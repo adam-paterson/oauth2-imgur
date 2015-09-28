@@ -2,11 +2,11 @@
 [![Latest Version](https://img.shields.io/github/release/adam-paterson/oauth2-imgur.svg?style=flat-square)](https://github.com/adam-paterson/oauth2-imgur/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/adam-paterson/oauth2-imgur/master.svg?style=flat-square)](https://travis-ci.org/adam-paterson/oauth2-imgur)
+[![HHVM Status](https://img.shields.io/hhvm/adam-paterson/oauth2-imgur.svg?style=flat-square)](http://hhvm.h4cc.de/package/adam-paterson/oauth2-imgur)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/adam-paterson/oauth2-imgur.svg?style=flat-square)](https://scrutinizer-ci.com/g/adam-paterson/oauth2-imgur/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/adam-paterson/oauth2-imgur.svg?style=flat-square)](https://scrutinizer-ci.com/g/adam-paterson/oauth2-imgur)
 [![Dependency Status](https://img.shields.io/versioneye/d/php/adam-paterson:oauth2-imgur/1.0.0.svg?style=flat-square)](https://www.versioneye.com/php/adam-paterson:oauth2-imgur/1.0.0)
 [![Total Downloads](https://img.shields.io/packagist/dt/adam-paterson/oauth2-imgur.svg?style=flat-square)](https://packagist.org/packages/adam-paterson/oauth2-imgur)
-
 This package provides Imgur OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
